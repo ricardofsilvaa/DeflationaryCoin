@@ -17,13 +17,13 @@ contract owned {
     }
 }
 
-interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) external; }
+interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }
 
 contract DeflationaryCoinERC20 {
-    // Variáveis ​​públicas do token
+    // Variáveis públicas do token
     string public name;
     string public symbol;
-    uint8 public decimals = 9;
+    uint8 public decimals = 8;
     // 8 casas decimais
     uint256 public totalSupply;
 
@@ -48,7 +48,7 @@ contract DeflationaryCoinERC20 {
         string tokenSymbol
     ) public {
         totalSupply = initialSupply * 10 ** uint256(decimals);  // Atualiza a oferta total com os valores decimais
-        balanceOf[msg.sender] = totalSupply - _value*1/100;                // Envia ao criador todos os tokens iniciais
+        balanceOf[msg.sender] = totalSupply;                // Envia ao criador todos os tokens iniciais
         name = tokenName;                                   // Define o nome para fins de exibição
         symbol = tokenSymbol;                               //  Definir o símbolo para fins de exibição
     }
@@ -57,8 +57,10 @@ contract DeflationaryCoinERC20 {
      * Transferência interna, só pode ser chamada por este contrato
      */
     function _transfer(address _from, address _to, uint _value) internal {
+        // Impede a transferência para o endereço 0x0
+        require(_to != 0x0);
         // Verifica o saldo do remetente
-        require(balanceOf[_from] >= _value;
+        require(balanceOf[_from] >= _value);
         // Verifica overflows
         require(balanceOf[_to] + _value > balanceOf[_to]);
         // Guarda para conferência futura
@@ -67,9 +69,10 @@ contract DeflationaryCoinERC20 {
         balanceOf[_from] -= _value;
         // Adiciona o mesmo valor ao destinatário
         balanceOf[_to] += _value*99/100;
-        Transfer(_from, _to, _value*99/100);
+        Transfer(_from, _to, _value);
         // Verificação usada para usar a análise estática do contrato, elas nunca devem falhar
-        assert(balanceOf[_from] + balanceOf[_to] == previousBalances;
+        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
+        totalSupply = totalSupply - _value*1/100;
     }
 
     /**
@@ -90,4 +93,5 @@ contract DeflationaryCoinERC20 {
      *
      * @param _value O valor a ser queimado
      */
+
 }
