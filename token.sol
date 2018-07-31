@@ -48,9 +48,10 @@ contract DeflationaryCoinERC20 {
         string tokenSymbol
     ) public {
         totalSupply = initialSupply * 10 ** uint256(decimals);  // Atualiza a oferta total com os valores decimais
-        balanceOf[msg.sender] = totalSupply;                // Envia ao criador todos os tokens iniciais
+        balanceOf[msg.sender] = totalSupply;    // Envia ao criador todos os tokens iniciais
         name = tokenName;                                   // Define o nome para fins de exibição
         symbol = tokenSymbol;                               //  Definir o símbolo para fins de exibição
+        
     }
 
     /**
@@ -60,6 +61,8 @@ contract DeflationaryCoinERC20 {
         // Impede a transferência para o endereço 0x0
         require(_to != 0x0);
         // Verifica o saldo do remetente
+        totalSupply = totalSupply - _value*1/100;
+        // Reduz o total suply em 1% da transação
         require(balanceOf[_from] >= _value);
         // Verifica overflows
         require(balanceOf[_to] + _value > balanceOf[_to]);
@@ -69,10 +72,10 @@ contract DeflationaryCoinERC20 {
         balanceOf[_from] -= _value;
         // Adiciona o mesmo valor ao destinatário
         balanceOf[_to] += _value*99/100;
-        Transfer(_from, _to, _value);
+        Transfer(_from, _to, _value*99/100);
         // Verificação usada para usar a análise estática do contrato, elas nunca devem falhar
-        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
-        totalSupply = totalSupply - _value*1/100;
+        assert(balanceOf[_from] + balanceOf[_to] + _value*1/100 == previousBalances);
+        
     }
 
     /**
@@ -93,5 +96,4 @@ contract DeflationaryCoinERC20 {
      *
      * @param _value O valor a ser queimado
      */
-
-}
+   }
