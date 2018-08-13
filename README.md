@@ -16,3 +16,22 @@ Suppy inicial de 50.000.000,00000000 de tokens;
 Redução em 1% no supply total do valor transacionado;
 
 Número do contrato:
+
+# DeflationaryCoin
+# Deflationary Coin: A Token ERC20 with Scheduled Shortage
+
+One of the major problems of the economy is the depreciation of currencies (inflation). This depreciation occurs essentially because of the "new" printing of "new" currency by governments and banks in a relatively random fashion, the argument is that of economic policy adjustments, but in fact it is the transfer of value among those who receive the "new" lastly with those who received first, and those who receive last are the ones who are harmed. This token will create a programmed shortage environment, as follows: each transaction will be discounted 1% of the nominal value, and this percentage will be burned, that is, there will be a reduction in the supply of the cryptomoeda. Consequently, this crypto-currency will be effectively and constantly deflationary, over time this supply will fall to zero. These tokens will not be sold, they will be distributed via airdrop as long as there are tokens available for distribution.
+
+Technical aspects of the token:
+
+Token name: DeflationaryCoin
+
+Symbol: DFC
+
+Smart Contract over the Ethereum network, with an ERC20 token;
+
+Suppy initial 50,000,000.00000000 tokens;
+
+Reduction in 1% in the total supply of the transacted value;
+
+Contact number:
